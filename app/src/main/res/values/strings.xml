@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">travo</string>
+
+    <string-array name="country_codes">
+        <item>+880</item>
+        <item>+1</item>
+        <item>+91</item>
+        <!-- add more as needed -->
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string name="terms_text">
+    By signing up, you agree to the
+    <a href="https://example.com/terms">Terms of service</a>
+    and <a href="https://example.com/privacy">Privacy policy</a>.
+    </string>
+
+    <string name="app_icon_description">App Icon</string>
+    <string name="sign_up_text">Don\'t have an account? <font color='?attr/colorPrimary'>Sign up here</font></string>
 </resources>
