@@ -22,4 +22,14 @@
 
     <string name="app_icon_description">App Icon</string>
     <string name="sign_up_text">Don\'t have an account? <font color='?attr/colorPrimary'>Sign up here</font></string>
+
+    <!-- new string for share journey page -->
+    <string-array name="transport_modes">
+        <item>Bus</item>
+        <item>Train</item>
+        <item>Flight</item>
+        <item>Car</item>
+        <item>Bike</item>
+        <item>Other</item>
+    </string-array>
 </resources>

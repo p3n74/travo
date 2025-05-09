@@ -1,0 +1,106 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView android:text="Start Location:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <TextView android:id="@+id/startLocationDetail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView android:text="End Location:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <TextView android:id="@+id/endLocationDetail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView android:text="Transport Mode:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <TextView android:id="@+id/transportModeDetail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView android:text="Total Travel Time:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <TextView android:id="@+id/travelTimeDetail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView android:text="Total Cost:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <TextView android:id="@+id/travelCostDetail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView android:text="Tips:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <TextView android:id="@+id/travelTipsDetail"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textStyle="italic"
+            android:layout_marginBottom="8dp"
+            android:minLines="2" />
+
+        <TextView android:text="Journey Rating:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <RatingBar
+            android:id="@+id/journeyRatingDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:isIndicator="true"
+            android:layout_marginBottom="16dp" />
+
+        <TextView android:text="Photos:"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView android:id="@+id/detailImage1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:layout_margin="4dp" />
+
+            <ImageView android:id="@+id/detailImage2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:layout_margin="4dp" />
+
+            <ImageView android:id="@+id/detailImage3"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:layout_margin="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
