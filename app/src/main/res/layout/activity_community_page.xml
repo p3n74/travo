@@ -21,7 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_margin="16dp"
-                android:hint="Looking for somewhere specific?"
+                android:hint="Looking for a specific starting point?"
                 android:padding="10dp"
                 android:visibility="gone" />
 
