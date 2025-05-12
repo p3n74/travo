@@ -4,36 +4,36 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent; // Import Intent for navigation
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox; // Import CheckBox
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast; // Import Toast for temporary messages
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.floatingactionbutton.FloatingActionButton; // Import FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText; // Import TextInputEditText
-import com.google.android.material.textfield.TextInputLayout; // Import TextInputLayout
 
 
 public class SignupActivity extends AppCompatActivity {
 
     // Declare variables for UI elements
-    FloatingActionButton fabLogo;
-    TextInputEditText etName;
-    TextInputEditText etEmail;
-    Spinner spinnerCountry;
-    TextInputEditText etPhone;
-    AutoCompleteTextView dropdownGender;
-    TextInputEditText etPassword;
-    CheckBox cbTerms;
-    TextView tvTerms;
-    MaterialButton btnSignUp;
-    MaterialButton btnGmail;
-    MaterialButton btnFacebook;
-    TextView tvLogin;
+    private ImageView imageViewAppIcon;
+    private TextInputEditText etName;
+    private TextInputEditText etEmail;
+    private Spinner spinnerCountry;
+    private TextInputEditText etPhone;
+    private AutoCompleteTextView dropdownGender;
+    private TextInputEditText etPassword;
+    private CheckBox cbTerms;
+    private TextView tvTerms;
+    private MaterialButton btnSignUp;
+    private MaterialButton btnGmail;
+    private TextView tvLogin;
+
+    // Temporary, For now local db lng sa
+    private UserDBHelper dbHelper;
 
 
     @Override
@@ -41,8 +41,26 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        // --- Find UI elements by their IDs ---
-        fabLogo = findViewById(R.id.fabLogo);
+        // --- Initializing DB Helper
+        dbHelper = new UserDBHelper(this);
+
+        // --- Initializing UI elements uusing IDs ---
+        initViews();
+
+        // Set up terms link clickable
+        tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
+
+        // Country-code spinner adapter
+        setupCountryCodeSpinner();
+        // Gender dropdown adapter
+        setupGenderDropdown();
+
+        // The click listeners (Both the signups and the link to login)
+        setupClickListeners();
+    }
+
+    private void initViews() {
+        imageViewAppIcon = findViewById(R.id.imageViewAppIcon);
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         spinnerCountry = findViewById(R.id.spinnerCountry);
@@ -53,66 +71,138 @@ public class SignupActivity extends AppCompatActivity {
         tvTerms = findViewById(R.id.tvTerms);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnGmail = findViewById(R.id.btnGmail);
-        btnFacebook = findViewById(R.id.btnFacebook);
         tvLogin = findViewById(R.id.tvLogin);
-        // --- End of Find UI elements ---
+    }
 
-
-        // Set up terms link clickable
-        tvTerms.setMovementMethod(LinkMovementMethod.getInstance());
-
-        // Set up Country-code spinner adapter
+    private void setupCountryCodeSpinner() {
+        // Country-code spinner adapter
         ArrayAdapter<CharSequence> countryAdapter = ArrayAdapter
                 .createFromResource(this, R.array.country_codes,
                         android.R.layout.simple_spinner_item);
         countryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCountry.setAdapter(countryAdapter);
+    }
 
-        // Set up Gender dropdown adapter
+    private void setupGenderDropdown() {
+        // Gender dropdown adapter
         String[] genders = {"Male", "Female", "Other"};
-        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                genders
-        );
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, genders);
         dropdownGender.setAdapter(genderAdapter);
 
+        // Default value is set just for better UX
+        dropdownGender.setText(genders[0], false);
+    }
 
+    private void setupClickListeners() {
         // Sign Up button
         btnSignUp.setOnClickListener(v -> {
-            // Get user input (you'll add validation and signup logic here)
-            String name = etName.getText().toString().trim();
-            String email = etEmail.getText().toString().trim();
-            String phone = etPhone.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
-            String selectedCountryCode = spinnerCountry.getSelectedItem().toString();
-            String selectedGender = dropdownGender.getText().toString().trim();
-            boolean agreedToTerms = cbTerms.isChecked();
-
-            // Basic check to show it's working
-            Toast.makeText(this, "Sign Up Clicked", Toast.LENGTH_SHORT).show();
-            // actual sign-up logic (validation, network calls, etc.) here after test
+            if (validateInputs()) {
+                performSignup();
+            }
         });
 
-        // Gmail Sign Up button
+        // Gmail Sign Up
         btnGmail.setOnClickListener(v -> {
             Toast.makeText(this, "Sign up with Gmail Clicked", Toast.LENGTH_SHORT).show();
-            // Implement Google Sign-Up maybeeeeee
+            // TODO: Implement Google Sign-Up integration
         });
 
-        // Facebook Sign Up button
-        btnFacebook.setOnClickListener(v -> {
-            Toast.makeText(this, "Sign up with Facebook Clicked", Toast.LENGTH_SHORT).show();
-            // Implement Facebook Sign-Up maybeeeeee
-        });
-
-        // Login link (Navigate to LoginActivity)
+        // Login link (Navigates to LoginActivity)
         tvLogin.setOnClickListener(v -> {
-            Toast.makeText(this, "Login Here Clicked", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         });
+    }
 
+    private boolean validateInputs() {
+        String name = etName.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
+        String gender = dropdownGender.getText().toString();
+        String password = etPassword.getText().toString().trim();
+        boolean agreedToTerms = cbTerms.isChecked();
+
+        // Basic validation I KNOW SO MANY IFs HAHAHAHA
+        if (name.isEmpty()) {
+            etName.setError("Name is required");
+            etName.requestFocus();
+            return false;
+        }
+
+        if (email.isEmpty()) {
+            etEmail.setError("Email is required");
+            etEmail.requestFocus();
+            return false;
+        }
+
+        if (!isValidEmail(email)) {
+            etEmail.setError("Enter a valid email address");
+            etEmail.requestFocus();
+            return false;
+        }
+
+        if (phone.isEmpty()) {
+            etPhone.setError("Phone number is required");
+            etPhone.requestFocus();
+            return false;
+        }
+
+        if (gender.isEmpty()) {
+            dropdownGender.setError("Please select gender");
+            dropdownGender.requestFocus();
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Password is required");
+            etPassword.requestFocus();
+            return false;
+        }
+
+        if (password.length() < 6) {
+            etPassword.setError("Password should be at least 6 characters");
+            etPassword.requestFocus();
+            return false;
+        }
+
+        if (!agreedToTerms) {
+            Toast.makeText(this, "You must agree to the terms", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        return email.matches(emailPattern);
+    }
+
+    private void performSignup() {
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+        if (dbHelper.emailExists(email)) {
+            Toast.makeText(this, "Email already registered", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Additional user details you might want to save
+        String name = etName.getText().toString().trim();
+        String countryCode = spinnerCountry.getSelectedItem().toString();
+        String phone = etPhone.getText().toString().trim();
+        String gender = dropdownGender.getText().toString();
+
+        // For now, just inserting basic user info
+        long result = dbHelper.insertUser(email, password);
+
+        if (result != -1) {
+            Toast.makeText(this, "Signup successful!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        } else {
+            Toast.makeText(this, "Signup failed!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

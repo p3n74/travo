@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,23 +14,32 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    ImageView imageViewAppIcon;
-    TextView textViewTitle;
-    EditText editTextEmail;
-    EditText editTextPassword;
-    TextView textViewForgotPassword;
-    Button buttonLogin;
-    TextView textViewOr;
-    Button buttonLoginGmail;
-    Button buttonLoginFacebook;
-    TextView textViewSignUp;
+    private ImageView imageViewAppIcon;
+    private TextView textViewTitle;
+    private EditText editTextEmail;
+    private EditText editTextPassword;
+    private TextView textViewForgotPassword;
+    private Button buttonLogin;
+    private TextView textViewOr;
+    private Button buttonLoginGmail;
+    private TextView textViewSignUp;
+
+    // Temporary, not the actual db, local lng sa for now
+    UserDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Find views by their IDs
+        dbHelper = new UserDBHelper(this);
+
+        initViews();
+        setupSignUpText();
+        setupClickListeners();
+    }
+
+    private void initViews() {
         imageViewAppIcon = findViewById(R.id.imageViewAppIcon);
         textViewTitle = findViewById(R.id.textViewTitle);
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -40,9 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewOr = findViewById(R.id.textViewOr);
         buttonLoginGmail = findViewById(R.id.buttonLoginGmail);
-        buttonLoginFacebook = findViewById(R.id.buttonLoginFacebook);
         textViewSignUp = findViewById(R.id.textViewSignUp);
+    }
 
+    private void setupSignUpText() {
         // Set the sign-up text with clickable link
         // Using Html.fromHtml is deprecated in newer APIs, consider using SpannableString for better practice
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -51,58 +60,80 @@ public class LoginActivity extends AppCompatActivity {
             textViewSignUp.setText(Html.fromHtml(getString(R.string.sign_up_text)));
         }
         textViewSignUp.setMovementMethod(LinkMovementMethod.getInstance());
-
-
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Main login button click. To be done
-                String email = editTextEmail.getText().toString();
-                String password = editTextPassword.getText().toString();
-
-                // login logic here (validation, API call, etc.), toast for now just for testing
-                Toast.makeText(LoginActivity.this, "Login attempted with: " + email, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // TODO: Forgot password, but focus on other areas first.
-        textViewForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle forgot password click. For now it'll be just a toast sa
-                Toast.makeText(LoginActivity.this, "Forgot Password clicked", Toast.LENGTH_SHORT).show();
-                // Navigate to forgot password screen or show a dialog
-            }
-        });
-
-        buttonLoginGmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle Gmail login click
-                Toast.makeText(LoginActivity.this, "Login with Gmail clicked", Toast.LENGTH_SHORT).show();
-                // Implement Google Sign-In maybeee
-            }
-        });
-
-        buttonLoginFacebook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle Facebook login click
-                Toast.makeText(LoginActivity.this, "Login with Facebook clicked", Toast.LENGTH_SHORT).show();
-                // Implement Facebook Login maybeee
-            }
-        });
-
-        textViewSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TOAST IS OPTIONAL, I just added this for now hehe
-                Toast.makeText(LoginActivity.this, "Opening Sign Up…", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
     }
+
+    private void setupClickListeners() {
+        // Login button
+        buttonLogin.setOnClickListener(v -> {
+            if (validateInputs()) {
+                performLogin();
+            }
+        });
+
+        // Forgot password
+        textViewForgotPassword.setOnClickListener(v -> {
+            Toast.makeText(LoginActivity.this, "Forgot Password clicked", Toast.LENGTH_SHORT).show();
+            // TODO: Implement forgot password functionality
+        });
+
+        // Gmail login
+        buttonLoginGmail.setOnClickListener(v -> {
+            Toast.makeText(LoginActivity.this, "Login with Gmail clicked", Toast.LENGTH_SHORT).show();
+            // TODO: Implement Google Sign-In
+        });
+
+        // Sign up (Just Navigates to Sign Up page)
+        textViewSignUp.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    private boolean validateInputs() {
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        if (email.isEmpty()) {
+            editTextEmail.setError("Email is required");
+            editTextEmail.requestFocus();
+            return false;
+        }
+
+        if (!isValidEmail(email)) {
+            editTextEmail.setError("Enter a valid email address");
+            editTextEmail.requestFocus();
+            return false;
+        }
+
+        if (password.isEmpty()) {
+            editTextPassword.setError("Password is required");
+            editTextPassword.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+        return email.matches(emailPattern);
+    }
+
+    private void performLogin() {
+        String email = editTextEmail.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+
+        if (dbHelper.checkUser(email, password)) {
+            Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
+            // TODO: Navigate to dashboard/home
+            // Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
+            // startActivity(intent);
+            // finish();
+        } else {
+            Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }

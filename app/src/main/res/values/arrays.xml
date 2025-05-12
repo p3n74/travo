@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- the spinner for country codes phone number in signup page -->
+    <string-array name="country_codes">
+        <item>+1 (US)</item>
+        <item>+1 (CA)</item>
+        <item>+44 (UK)</item>
+        <item>+61 (AU)</item>
+        <item>+63 (PH)</item>
+        <item>+81 (JP)</item>
+        <item>+82 (KR)</item>
+        <item>+86 (CN)</item>
+        <item>+91 (IN)</item>
+        <item>+33 (FR)</item>
+        <item>+39 (IT)</item>
+        <item>+49 (DE)</item>
+        <item>+52 (MX)</item>
+        <item>+55 (BR)</item>
+        <item>+60 (MY)</item>
+        <item>+65 (SG)</item>
+        <item>+66 (TH)</item>
+        <item>+84 (VN)</item>
+        <item>+90 (TR)</item>
+        <item>+971 (AE)</item>
+    </string-array>
+</resources>

@@ -91,17 +91,6 @@
         android:paddingHorizontal="24dp"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
-    <Button
-        android:id="@+id/buttonLoginFacebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Log in with Facebook"
-        android:drawableStart="@drawable/facebook_icon"
-        android:paddingVertical="12dp"
-        android:paddingHorizontal="24dp"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
-
     <TextView
         android:id="@+id/textViewSignUp"
         android:layout_width="wrap_content"

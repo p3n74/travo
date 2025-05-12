@@ -1,27 +1,25 @@
 <resources>
-    <string name="app_name">travo</string>
+    <string name="app_name">Travo</string>
+    <string name="app_icon_description">App logo</string>
 
-    <string-array name="country_codes">
-        <item>+880</item>
-        <item>+1</item>
-        <item>+91</item>
-        <!-- add more as needed -->
-    </string-array>
-
-    <string-array name="gender_array">
-        <item>Male</item>
-        <item>Female</item>
-        <item>Other</item>
-    </string-array>
-
+    <!-- UI texts -->
+    <string name="sign_up_text">Don\'t have an account? <font color='?attr/colorPrimary'>Sign up here</font></string>
     <string name="terms_text">
-    By signing up, you agree to the
-    <a href="https://example.com/terms">Terms of service</a>
-    and <a href="https://example.com/privacy">Privacy policy</a>.
+        I agree to the <a href="https://example.com/terms">Terms of service</a> and <a href="https://example.com/privacy">Privacy policy</a>.
     </string>
 
-    <string name="app_icon_description">App Icon</string>
-    <string name="sign_up_text">Don\'t have an account? <font color='?attr/colorPrimary'>Sign up here</font></string>
+    <!-- error messages for signup and login -->
+    <string name="error_email_required">Email is required</string>
+    <string name="error_password_required">Password is required</string>
+    <string name="error_invalid_email">Please enter a valid email address</string>
+    <string name="error_terms_required">You must agree to the terms</string>
+    <string name="error_email_exists">Email already registered</string>
+
+    <!-- success/error messages for signup and login -->
+    <string name="success_signup">Signup successful!</string>
+    <string name="success_login">Login successful!</string>
+    <string name="error_login_failed">Invalid email or password</string>
+    <string name="error_signup_failed">Signup failed!</string>
 
     <!-- new string for share journey page -->
     <string-array name="transport_modes">
