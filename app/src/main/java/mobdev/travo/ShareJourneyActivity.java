@@ -21,7 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShareJourneyActivity extends AppCompatActivity {
+public class ShareJourneyActivity extends NavigationBarActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private List<Uri> selectedImages = new ArrayList<>();
@@ -31,6 +31,9 @@ public class ShareJourneyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_journey);
+
+        // Navbar bottom setup ni
+        setupBottomNavigation(-1);
 
         AutoCompleteTextView startLocation = findViewById(R.id.startLocation);
         Spinner transportMode = findViewById(R.id.transportMode);

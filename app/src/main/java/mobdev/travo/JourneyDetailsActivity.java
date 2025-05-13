@@ -11,7 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class JourneyDetailsActivity extends AppCompatActivity {
+public class JourneyDetailsActivity extends NavigationBarActivity {
 
     private ImageView[] detailImages;
 
@@ -21,6 +21,9 @@ public class JourneyDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_journey_details);
+
+        // Bottom NavBar ni
+        setupBottomNavigation(-1);
 
         TextView startLoc = findViewById(R.id.startLocationDetail);
         TextView endLoc = findViewById(R.id.endLocationDetail);
