@@ -34,7 +34,7 @@ public class CommunityPageActivity extends NavigationBarActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_community_page);
 
-        setupBottomNavigation(R.id.nav_home);
+        setupBottomNavigation(-1);
 
         // ✅ Move findViewById here, after setContentView
         btnAdd = findViewById(R.id.btnAdd);

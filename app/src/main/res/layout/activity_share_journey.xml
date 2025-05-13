@@ -1,92 +1,110 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <!-- Scrollable content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <AutoCompleteTextView
+                android:id="@+id/startLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Start Location" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="End Location: [auto-filled]"
+                android:paddingTop="8dp" />
+
+            <Spinner
+                android:id="@+id/transportMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/transport_modes" />
+
+            <EditText
+                android:id="@+id/travelTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Total Travel Time" />
+
+            <EditText
+                android:id="@+id/travelCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Total Cost" />
+
+            <EditText
+                android:id="@+id/travelTips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Optional Tips"
+                android:inputType="textMultiLine"
+                android:minLines="3" />
+
+            <Button
+                android:id="@+id/uploadPhotos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Photos (max 3)" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="8dp">
+
+                <ImageView android:id="@+id/imageView1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop" />
+                <ImageView android:id="@+id/imageView2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginHorizontal="8dp"
+                    android:scaleType="centerCrop" />
+                <ImageView android:id="@+id/imageView3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop" />
+            </LinearLayout>
+
+            <RatingBar
+                android:id="@+id/journeyRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:layout_marginTop="8dp" />
+
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Journey"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_gravity="bottom"
+    app:menu="@menu/bottom_nav_menu" />
 
-        <AutoCompleteTextView
-            android:id="@+id/startLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Start Location" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="End Location: [auto-filled]"
-            android:paddingTop="8dp" />
-
-        <Spinner
-            android:id="@+id/transportMode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/transport_modes" />
-
-        <EditText
-            android:id="@+id/travelTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Total Travel Time" />
-
-        <EditText
-            android:id="@+id/travelCost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Total Cost" />
-
-        <EditText
-            android:id="@+id/travelTips"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Optional Tips"
-            android:inputType="textMultiLine"
-            android:minLines="3" />
-
-        <Button
-            android:id="@+id/uploadPhotos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload Photos (max 3)" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:paddingTop="8dp">
-
-            <ImageView android:id="@+id/imageView1"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop" />
-            <ImageView android:id="@+id/imageView2"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginHorizontal="8dp"
-                android:scaleType="centerCrop" />
-            <ImageView android:id="@+id/imageView3"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:scaleType="centerCrop" />
-        </LinearLayout>
-
-        <RatingBar
-            android:id="@+id/journeyRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="1.0"
-            android:layout_marginTop="8dp" />
-
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Share Journey"
-            android:layout_marginTop="16dp" />
-    </LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
