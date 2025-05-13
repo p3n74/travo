@@ -282,8 +282,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List getAllDestinationsAsList(Context context) {
-        List destinationList = new ArrayList<>();
+    public List<DestinationModel> getAllDestinationsAsList(Context context) {
+        List<DestinationModel> destinationList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 TABLE_DESTINATIONS,
@@ -299,18 +299,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
             do {
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(DEST_COL_NAME));
                 String location = cursor.getString(cursor.getColumnIndexOrThrow(DEST_COL_LOCATION));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow(DEST_COL_DESC));
                 String imgName = cursor.getString(cursor.getColumnIndexOrThrow(DEST_COL_GALLERY));
-                // Use the resource identifier to get the drawable
-                int imgResId = context.getResources().getIdentifier(
-                        imgName,
-                        "drawable",
-                        context.getPackageName()
-                );
-                // Fallback if resource not found
-                if (imgResId == 0) {
-                    imgResId = R.drawable.ic_placeholder;
-                }
-                destinationList.add(new DestinationModel(name, location, imgResId));
+
+                // Just store the filename directly
+                destinationList.add(new DestinationModel(name, location, description, imgName));
             } while (cursor.moveToNext());
 
             cursor.close();
@@ -319,7 +312,19 @@ public class UserDBHelper extends SQLiteOpenHelper {
         return destinationList;
     }
 
+    public boolean isDestinationsTableEmpty() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + TABLE_DESTINATIONS, null);
 
+        boolean isEmpty = true;
+        if (cursor != null && cursor.moveToFirst()) {
+            int count = cursor.getInt(0);
+            isEmpty = (count == 0);
+            cursor.close();
+        }
+
+        return isEmpty;
+    }
 
 
 

@@ -25,14 +25,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Share Your Journey"
+                android:text="Add New Destination"
                 android:textStyle="bold"
                 android:textSize="28sp"
                 android:textAlignment="center"
                 android:layout_marginBottom="24dp"
                 android:textColor="#232323" />
 
-            <!-- Main Card -->
+            <!-- Main Information Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,152 +49,85 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Route Details"
+                        android:text="Destination Information"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:textColor="#232323"
                         android:layout_marginBottom="16dp"/>
 
-                    <!-- Origin field with Material Design -->
+                    <!-- Name field -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:hint="Starting Point"
+                        android:hint="Destination Name"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-                        <AutoCompleteTextView
-                            android:id="@+id/startLocation"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/destName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Destination selector -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Select Destination"
-                        android:textSize="16sp"
-                        android:textColor="#555555"
-                        android:layout_marginBottom="4dp"/>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        android:layout_marginBottom="12dp"
-                        app:strokeWidth="1dp"
-                        app:strokeColor="#DDDDDD">
-
-                        <Spinner
-                            android:id="@+id/endLocationSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:paddingHorizontal="8dp"
-                            android:background="@null"
-                            android:spinnerMode="dropdown"/>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Transport mode selector -->
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Transport Mode"
-                        android:textSize="16sp"
-                        android:textColor="#555555"
-                        android:layout_marginBottom="4dp"/>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="0dp"
-                        android:layout_marginBottom="12dp"
-                        app:strokeWidth="1dp"
-                        app:strokeColor="#DDDDDD">
-
-                        <Spinner
-                            android:id="@+id/transportMode"
-                            android:layout_width="match_parent"
-                            android:layout_height="48dp"
-                            android:paddingHorizontal="8dp"
-                            android:background="@null"
-                            android:spinnerMode="dropdown"/>
-                    </com.google.android.material.card.MaterialCardView>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Details Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                android:layout_marginBottom="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Journey Details"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:textColor="#232323"
-                        android:layout_marginBottom="16dp"/>
-
-                    <!-- Time field -->
+                    <!-- Location field -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:hint="Travel Time (e.g., 1h 30m)"
+                        android:hint="Location"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/travelTime"
+                            android:id="@+id/destLocation"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <!-- Cost field -->
+                    <!-- Description field -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="12dp"
-                        android:hint="Cost (e.g., ₱300)"
+                        android:hint="Description"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/travelCost"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <!-- Tips field -->
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
-                        android:hint="Tips for Other Travelers (Optional)"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/travelTips"
+                            android:id="@+id/destDescription"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textMultiLine"
                             android:minLines="3"
                             android:gravity="top"/>
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Category selector -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Category"
+                        android:textSize="16sp"
+                        android:textColor="#555555"
+                        android:layout_marginBottom="4dp"/>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginBottom="12dp"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="#DDDDDD">
+
+                        <Spinner
+                            android:id="@+id/categorySpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:paddingHorizontal="8dp"
+                            android:background="@null"
+                            android:spinnerMode="dropdown"/>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -204,7 +137,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
-                android:layout_marginBottom="24dp">
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -216,29 +149,71 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rate Your Journey"
+                        android:text="Initial Rating"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         android:textColor="#232323"
                         android:layout_marginBottom="16dp"/>
 
                     <RatingBar
-                        android:id="@+id/journeyRating"
+                        android:id="@+id/destRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
-                        android:stepSize="1.0"
+                        android:stepSize="0.5"
                         android:progressTint="@color/purple_500"
                         android:secondaryProgressTint="@color/purple_500"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Image Selection Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Destination Image"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="#232323"
+                        android:layout_marginBottom="16dp"/>
+
+                    <ImageView
+                        android:id="@+id/destImagePreview"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:background="#EEEEEE"
+                        android:layout_marginBottom="16dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSelectImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select Image"
+                        android:layout_gravity="center"
+                        app:icon="@android:drawable/ic_menu_gallery"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <!-- Submit Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/submitButton"
+                android:id="@+id/btnSubmitDestination"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="Share Journey"
+                android:text="Add Destination"
                 android:textSize="16sp"
                 app:cornerRadius="28dp"
                 android:backgroundTint="@color/purple_500"

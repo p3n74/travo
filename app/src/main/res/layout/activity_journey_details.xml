@@ -1,124 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView android:text="Start Location:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <TextView android:id="@+id/startLocationDetail"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView android:text="End Location:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <TextView android:id="@+id/endLocationDetail"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView android:text="Transport Mode:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <TextView android:id="@+id/transportModeDetail"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView android:text="Total Travel Time:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <TextView android:id="@+id/travelTimeDetail"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView android:text="Total Cost:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <TextView android:id="@+id/travelCostDetail"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView android:text="Tips:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <TextView android:id="@+id/travelTipsDetail"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textStyle="italic"
-                android:layout_marginBottom="8dp"
-                android:minLines="2" />
-
-            <TextView android:text="Journey Rating:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <RatingBar
-                android:id="@+id/journeyRatingDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="1.0"
-                android:isIndicator="true"
-                android:layout_marginBottom="16dp" />
-
-            <TextView android:text="Photos:"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"/>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <ImageView android:id="@+id/detailImage1"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    android:layout_margin="4dp" />
-
-                <ImageView android:id="@+id/detailImage2"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    android:layout_margin="4dp" />
-
-                <ImageView android:id="@+id/detailImage3"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:scaleType="centerCrop"
-                    android:layout_margin="4dp" />
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- Bottom Navigation -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:menu="@menu/bottom_nav_menu" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <!-- Header: User & Rating -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_location_pin"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
+                android:text="User Name"/>
+
+            <RatingBar
+                android:id="@+id/rbRouteRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:isIndicator="true"
+                android:rating="4.5"/>
+        </LinearLayout>
+
+        <!-- Route Summary -->
+        <TextView
+            android:id="@+id/tvRouteSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1 ride via Jeepney"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Journey Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FROM"
+                    android:textSize="12sp"
+                    android:textColor="#888888"/>
+
+                <TextView
+                    android:id="@+id/tvStartLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start Location"
+                    android:textSize="14sp"
+                    android:textColor="#333333"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TO"
+                    android:textSize="12sp"
+                    android:textColor="#888888"/>
+
+                <TextView
+                    android:id="@+id/tvEndLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="End Location"
+                    android:textSize="14sp"
+                    android:textColor="#333333"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Cost & Time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvCost"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="₱50"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#4CAF50"/>
+
+            <TextView
+                android:id="@+id/tvTravelTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30 min"
+                android:textSize="16sp"
+                android:textColor="#FF9800"/>
+        </LinearLayout>
+
+        <!-- Tips (expandable) -->
+        <LinearLayout
+            android:id="@+id/layoutTips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TIPS"
+                android:textSize="12sp"
+                android:textColor="#888888"/>
+
+            <TextView
+                android:id="@+id/tvTravelTips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Travel tips here..."
+                android:textSize="14sp"
+                android:textColor="#333333"
+                android:maxLines="3"
+                android:ellipsize="end"/>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

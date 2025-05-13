@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent; // Import Intent for navigation
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox; // Import CheckBox
@@ -43,8 +44,14 @@ public class SignupActivity extends AppCompatActivity {
 
         // --- Initializing DB Helper
         dbHelper = new UserDBHelper(this);
-        dbHelper.clearDestinations();
-        dbHelper.insertSampleDestinations();
+
+        // Check if destinations table is empty and populate with samples if needed
+        if (dbHelper.isDestinationsTableEmpty()) {
+            // Table is empty, insert sample data
+            //Log.d(TAG, "Destinations table is empty, inserting sample data...");
+            dbHelper.insertSampleDestinations();
+            //Log.d(TAG, "Sample destinations added successfully");
+        }
 
         // --- Initializing UI elements uusing IDs ---
         initViews();

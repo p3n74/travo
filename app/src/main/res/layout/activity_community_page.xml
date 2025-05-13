@@ -32,19 +32,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#333333"
                 android:padding="16dp"/>
 
-            <ImageView
-                android:id="@+id/placeImage"
+            <!-- Keep only one image view with improved styling -->
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"/>
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp"
+                android:layout_marginBottom="16dp">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/galleryViewPager"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="10dp" />
+                <ImageView
+                    android:id="@+id/placeImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="centerCrop"
+                    android:contentDescription="Destination Image"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Removed the ViewPager2 -->
 
             <TextView
                 android:id="@+id/placeSummary"
@@ -55,12 +63,12 @@
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Community Header Bar -->
+            <!-- Community Header Bar with improved styling -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingTop="8dp"
+                android:paddingTop="16dp"
                 android:paddingBottom="8dp"
                 android:gravity="center_vertical">
 
@@ -70,13 +78,17 @@
                     android:layout_height="30dp"
                     android:src="@drawable/ic_plus"
                     android:clickable="true"
-                    android:focusable="true" />
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#333333"
                     android:gravity="center"
                     android:text="Community Routes" />
 
@@ -86,7 +98,9 @@
                     android:layout_height="30dp"
                     android:src="@drawable/ic_search"
                     android:clickable="true"
-                    android:focusable="true" />
+                    android:focusable="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="4dp"/>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

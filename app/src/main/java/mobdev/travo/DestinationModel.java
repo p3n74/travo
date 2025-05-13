@@ -3,12 +3,14 @@ package mobdev.travo;
 public class DestinationModel {
     private String title;
     private String address;
-    private int imageResId;
+    private String description;
+    private String imageFilename; // Store filename instead of resource ID
 
-    public DestinationModel(String title, String address, int imageResId) {
+    public DestinationModel(String title, String address, String description, String imageFilename) {
         this.title = title;
         this.address = address;
-        this.imageResId = imageResId;
+        this.description = description;
+        this.imageFilename = imageFilename;
     }
 
     public String getTitle() {
@@ -19,7 +21,11 @@ public class DestinationModel {
         return address;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImageFilename() {
+        return imageFilename;
     }
 }

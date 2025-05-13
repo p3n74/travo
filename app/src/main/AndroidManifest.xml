@@ -12,26 +12,48 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Travo"
         tools:targetApi="31">
-
-        <activity android:name=".SignupActivity"
+        <activity
+            android:name=".AddDestination"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".LoginActivity" android:exported="false" />
-        <activity android:name=".MainActivity" android:exported="false" />
-        <activity android:name=".CommunityPageActivity" android:exported="false" />
-        <activity android:name=".ConfirmAddActivity" android:exported="false" />
-        <activity android:name=".HomePageActivity" android:exported="false" />
-        <activity android:name=".JourneyDetailsActivity" android:exported="false" />
-        <activity android:name=".ProfileActivity" android:exported="false" />
-        <activity android:name=".SettingsActivity" android:exported="false" />
-        <activity android:name=".ShareJourneyActivity" android:exported="false" />
-        <activity android:name=".TypeAddActivity" android:exported="false" />
-
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommunityPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ConfirmAddActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomePageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".JourneyDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShareJourneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TypeAddActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,21 +1,15 @@
 package mobdev.travo;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.*;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,17 +17,13 @@ import java.util.Map;
 
 public class ShareJourneyActivity extends NavigationBarActivity {
 
-    private static final int PICK_IMAGES_REQUEST = 101;
-
     private AutoCompleteTextView startLocation;
     private Spinner transportMode;
     private Spinner endLocationSpinner;
     private EditText travelTime, travelCost, travelTips;
     private RatingBar journeyRating;
-    private Button uploadPhotos, submitButton;
-    private ImageView imageView1, imageView2, imageView3;
+    private Button submitButton;
 
-    private List<Uri> selectedImageUris = new ArrayList<>();
     private Map<String, Long> destinationMap = new HashMap<>();
 
     private UserDBHelper dbHelper;
@@ -46,6 +36,7 @@ public class ShareJourneyActivity extends NavigationBarActivity {
 
         dbHelper = new UserDBHelper(this);
 
+        // Initialize UI components
         startLocation = findViewById(R.id.startLocation);
         transportMode = findViewById(R.id.transportMode);
         endLocationSpinner = findViewById(R.id.endLocationSpinner);
@@ -53,11 +44,7 @@ public class ShareJourneyActivity extends NavigationBarActivity {
         travelCost = findViewById(R.id.travelCost);
         travelTips = findViewById(R.id.travelTips);
         journeyRating = findViewById(R.id.journeyRating);
-        uploadPhotos = findViewById(R.id.uploadPhotos);
         submitButton = findViewById(R.id.submitButton);
-        imageView1 = findViewById(R.id.imageView1);
-        imageView2 = findViewById(R.id.imageView2);
-        imageView3 = findViewById(R.id.imageView3);
 
         // Set up transport mode spinner
         String[] transportModes = {"Bus", "Jeepney", "Train", "Flight", "Car", "Ferry", "Motorcycle", "Walking", "Other"};
@@ -69,7 +56,7 @@ public class ShareJourneyActivity extends NavigationBarActivity {
         // Populate the destination spinner
         populateDestinationSpinner();
 
-        uploadPhotos.setOnClickListener(v -> openImagePicker());
+        // Set submit button click listener
         submitButton.setOnClickListener(v -> saveJourney());
 
         setupBottomNavigation(R.id.nav_home);
@@ -115,56 +102,6 @@ public class ShareJourneyActivity extends NavigationBarActivity {
         });
     }
 
-    private void openImagePicker() {
-        // Allow user to pick up to 3 images from gallery
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select up to 3 Images"), PICK_IMAGES_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGES_REQUEST && resultCode == Activity.RESULT_OK) {
-            selectedImageUris.clear();
-            imageView1.setImageResource(android.R.color.transparent);
-            imageView2.setImageResource(android.R.color.transparent);
-            imageView3.setImageResource(android.R.color.transparent);
-
-            if (data != null) {
-                // Multiple images
-                if (data.getClipData() != null) {
-                    int count = Math.min(data.getClipData().getItemCount(), 3);
-                    for (int i = 0; i < count; i++) {
-                        Uri imageUri = data.getClipData().getItemAt(i).getUri();
-                        selectedImageUris.add(imageUri);
-                    }
-                } else if (data.getData() != null) { // Single image
-                    selectedImageUris.add(data.getData());
-                }
-
-                // Preview images
-                try {
-                    if (selectedImageUris.size() > 0)
-                        imageView1.setImageBitmap(getBitmapFromUri(selectedImageUris.get(0)));
-                    if (selectedImageUris.size() > 1)
-                        imageView2.setImageBitmap(getBitmapFromUri(selectedImageUris.get(1)));
-                    if (selectedImageUris.size() > 2)
-                        imageView3.setImageBitmap(getBitmapFromUri(selectedImageUris.get(2)));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this, "Error loading image", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
-
-    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-        return MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-    }
-
     private void saveJourney() {
         String start = startLocation.getText().toString().trim();
 
@@ -192,14 +129,10 @@ public class ShareJourneyActivity extends NavigationBarActivity {
             return;
         }
 
-        String photoPath = "";
-        if (selectedImageUris.size() > 0) {
-            photoPath = selectedImageUris.get(0).toString();
-        }
-
         // Insert journey route into the db - using the selected destination ID
+        // Photo path is now empty string since we removed photo functionality
         long result = dbHelper.insertRoute(userId, selectedDestinationId,
-                start, transport, time, cost, tips, photoPath, date);
+                start, transport, time, cost, tips, "", date);
 
         if (result != -1) {
             Toast.makeText(this, "Journey shared!", Toast.LENGTH_SHORT).show();
