@@ -1,8 +1,11 @@
 package mobdev.travo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -10,10 +13,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends NavigationBarActivity {
 
     RecyclerView popularRecyclerView, discoverRecyclerView;
     DestinationAdapter popularAdapter, discoverAdapter;
@@ -24,6 +30,9 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_page);
+
+        // Wire up the bottom nav, highlighting "Home"
+        setupBottomNavigation(R.id.nav_home);
 
         popularRecyclerView = findViewById(R.id.popularRecyclerView);
         discoverRecyclerView = findViewById(R.id.discoverRecyclerView);

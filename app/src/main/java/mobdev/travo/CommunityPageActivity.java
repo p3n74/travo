@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CommunityPageActivity extends AppCompatActivity {
+public class CommunityPageActivity extends NavigationBarActivity {
 
     private ImageView btnAdd, btnSearch;
 
@@ -33,6 +33,8 @@ public class CommunityPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_community_page);
+
+        setupBottomNavigation(R.id.nav_home);
 
         // ✅ Move findViewById here, after setContentView
         btnAdd = findViewById(R.id.btnAdd);
@@ -46,11 +48,67 @@ public class CommunityPageActivity extends AppCompatActivity {
         ViewPager2 galleryViewPager = findViewById(R.id.galleryViewPager);
         TextView placeSummary = findViewById(R.id.placeSummary);
 
+        // Read the extras:
+        Intent intent = getIntent();
+        String title   = intent.getStringExtra("title");
+        String address = intent.getStringExtra("address");
+        int imageResId = intent.getIntExtra("imageResId", -1);
+
+        // Now you can use title/address/imageResId to customize the UI:
+        TextView placeTitle = findViewById(R.id.placeTitle);
+        ImageView placeImage = findViewById(R.id.placeImage);
+        placeTitle.setText(title);
+        if (imageResId != -1) {
+            placeImage.setImageResource(imageResId);
+        }
+
         List<CommunityItem> data = new ArrayList<>();
-        data.add(new CommunityItem("Ayala Center Cebu", 4.5f, "₱15", "1 ride via 13C"));
-        data.add(new CommunityItem("SM Seaside", 4.2f, "₱15", "2 rides via 12L & 10M"));
-        data.add(new CommunityItem("IT Park", 4.8f, "₱20", "1 ride via 17B"));
-        data.add(new CommunityItem("Colon Street", 3.9f, "₱14", "1 ride via 06B"));
+        data.add(new CommunityItem(
+                "Ayala Center Cebu",
+                4.5f,
+                "₱15",
+                "1 ride via 13C",
+                "IT Park, Cebu City",    // start
+                "Ayala Center Cebu",     // end
+                "Jeepney",               // mode
+                "20m",                   // time
+                "Sit near the window"    // tips
+        ));
+        data.add(new CommunityItem(
+                "SM Seaside",
+                4.2f,
+                "₱15",
+                "2 rides via 12L & 10M",
+                "Cebu City Proper",        // start (Assumed general starting point in Cebu)
+                "SM Seaside City Cebu",    // end (Full name of the destination)
+                "Jeepney",                 // mode (Implied by route numbers)
+                "50m",                     // time (Estimated duration for 2 rides and transfer)
+                "Jeepneys can be crowded; be ready for transfers." // tips
+        ));
+
+        data.add(new CommunityItem(
+                "IT Park",
+                4.8f,
+                "₱20",
+                "1 ride via 17B",
+                "Cebu City Proper",        // start (Assumed general starting point in Cebu)
+                "Cebu IT Park",            // end (Full name of the destination)
+                "Jeepney",                 // mode (Implied by route numbers)
+                "30m",                     // time (Estimated duration for 1 ride)
+                "Expect heavy traffic during peak hours around the area." // tips
+        ));
+
+        data.add(new CommunityItem(
+                "Colon Street",
+                3.9f,
+                "₱14",
+                "1 ride via 06B",
+                "Cebu City Proper",        // start (Assumed general starting point in Cebu)
+                "Colon Street, Cebu City", // end (Full name of the destination)
+                "Jeepney",                 // mode (Implied by route numbers)
+                "25m",                     // time (Estimated duration for 1 ride, considering congestion)
+                "Keep an eye on your belongings in crowded areas." // tips
+        ));
 
         List<Integer> galleryImages = Arrays.asList(
                 R.drawable.temple_leah,
@@ -67,8 +125,8 @@ public class CommunityPageActivity extends AppCompatActivity {
         placeSummary.setText("Temple of Leah is a Roman-inspired structure built as a symbol of undying love. It offers panoramic views of Cebu and historical architecture.");
 
         btnAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(CommunityPageActivity.this, ShareJourneyActivity.class);
-            startActivity(intent);
+            Intent shareIntent = new Intent(CommunityPageActivity.this, ShareJourneyActivity.class);
+            startActivity(shareIntent);
         });
 
         btnSearch.setOnClickListener(v -> {

@@ -1,11 +1,20 @@
 package mobdev.travo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ProfileActivity extends AppCompatActivity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
+import mobdev.travo.CommunityPageActivity;
+import mobdev.travo.HomePageActivity;
+
+public class ProfileActivity extends NavigationBarActivity  {
 
     private ImageView profileImage;  // Changed from ShapeableImageView to ImageView
     private TextView nameTextView, birthdayTextView, phoneTextView, emailTextView;
@@ -15,6 +24,9 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        // This is the navigation bar part na
+        setupBottomNavigation(R.id.nav_profile);
 
         profileImage = findViewById(R.id.profile_image); // Cast to ImageView
         nameTextView = findViewById(R.id.profile_name);

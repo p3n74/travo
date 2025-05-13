@@ -1,29 +1,45 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Scrollable content -->
+    <!-- Make everything scroll but respect the appbar behavior -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
         android:paddingBottom="80dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <!-- Your existing content here -->
             <EditText
                 android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_margin="16dp"
+                android:layout_marginBottom="16dp"
                 android:hint="Looking for a specific starting point?"
                 android:padding="10dp"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/placeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:padding="16dp"/>
+
+            <ImageView
+                android:id="@+id/placeImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"/>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/galleryViewPager"
@@ -38,24 +54,22 @@
                 android:padding="16dp"
                 android:text="This is a beautiful historical landmark with scenic views and rich cultural background."
                 android:textSize="16sp"
-                android:textColor="#333333"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Community Header Bar (moved here) -->
+            <!-- Community Header Bar -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
                 android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/btnAdd"
-                    android:src="@drawable/ic_plus"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:src="@drawable/ic_plus"
                     android:clickable="true"
                     android:focusable="true" />
 
@@ -69,9 +83,9 @@
 
                 <ImageView
                     android:id="@+id/btnSearch"
-                    android:src="@drawable/ic_search"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:src="@drawable/ic_search"
                     android:clickable="true"
                     android:focusable="true" />
             </LinearLayout>
@@ -82,7 +96,16 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
                 android:padding="8dp" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Navigation -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

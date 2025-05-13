@@ -15,6 +15,7 @@ public class JourneyDetailsActivity extends AppCompatActivity {
 
     private ImageView[] detailImages;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.content.Intent;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,18 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
         holder.titleTextView.setText(model.getTitle());
         holder.addressTextView.setText(model.getAddress());
         holder.imageView.setImageResource(model.getImageResId());
+
+        holder.itemView.setOnClickListener(v -> {
+            // Create intent to start CommunityPageActivity
+            Intent intent = new Intent(v.getContext(), CommunityPageActivity.class);
+
+            // (Optional) Pass data about the chosen destination:
+            intent.putExtra("title", model.getTitle());
+            intent.putExtra("address", model.getAddress());
+            intent.putExtra("imageResId", model.getImageResId());
+
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override
