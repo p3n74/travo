@@ -1,8 +1,10 @@
 package mobdev.travo;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -21,9 +23,11 @@ import java.util.List;
 
 public class HomePageActivity extends NavigationBarActivity {
 
-    RecyclerView popularRecyclerView, discoverRecyclerView;
-    DestinationAdapter popularAdapter, discoverAdapter;
-    List<DestinationModel> popularList, discoverList;
+    RecyclerView rvDestinations;
+    DestinationAdapter destinationAdapter;
+    List<DestinationModel> destinationList;
+    UserDBHelper dbHelper;
+    TextView tvWelcome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,30 +35,41 @@ public class HomePageActivity extends NavigationBarActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_page);
 
-        // Wire up the bottom nav, highlighting "Home"
         setupBottomNavigation(R.id.nav_home);
 
-        popularRecyclerView = findViewById(R.id.popularRecyclerView);
-        discoverRecyclerView = findViewById(R.id.discoverRecyclerView);
+        tvWelcome = findViewById(R.id.tvWelcome);
+        rvDestinations = findViewById(R.id.rvDestinations);
+        dbHelper = new UserDBHelper(this);
 
-        popularList = new ArrayList<>();
-        discoverList = new ArrayList<>();
+// Set username if available (same as before)
+        String email = getSharedPreferences("user_session", MODE_PRIVATE)
+                .getString("email", null);
+        if (email != null) {
+            Cursor c = dbHelper.getUserByEmail(email);
+            if (c != null && c.moveToFirst()) {
+                String name = c.getString(c.getColumnIndexOrThrow(UserDBHelper.COL_NAME));
+                tvWelcome.setText("Welcome, " + name + "!");
+                c.close();
+            }
+        }
 
-        // Add sample data
-        popularList.add(new DestinationModel("IT Park, Cebu City", "Cebu IT Park, Brgy Apas, Cebu City, 6000", R.drawable.it_park));
-        popularList.add(new DestinationModel("Temple of Leah", "Cebu Transcentral Hwy, Cebu City, 6000", R.drawable.temple_leah));
+// Now retrieve DestinationModel objects via the new method
+        destinationList = dbHelper.getAllDestinationsAsList(this);
 
-        discoverList.add(new DestinationModel("Elevator ni King Al", "2010 Gov. M. Cuenco Ave, Cebu City", R.drawable.elevator));
-        discoverList.add(new DestinationModel("Tales and Feelings", "2nd flr, above N. Ramos St, Cebu City", R.drawable.tales_feelings));
-a
-        // Set adapters
-        popularAdapter = new DestinationAdapter(this, popularList);
-        discoverAdapter = new DestinationAdapter(this, discoverList);
+// Set up RecyclerView
+        destinationAdapter = new DestinationAdapter(this, destinationList);
+        rvDestinations.setLayoutManager(
+                new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvDestinations.setAdapter(destinationAdapter);
 
-        popularRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        discoverRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+// Search bar tap
+        findViewById(R.id.tvSearchPrompt).setOnClickListener(v -> {
+            // startActivity(new Intent(this, SearchActivity.class));
+        });
 
-        popularRecyclerView.setAdapter(popularAdapter);
-        discoverRecyclerView.setAdapter(discoverAdapter);
+// FAB for sharing journeys
+        findViewById(R.id.fabShareJourney).setOnClickListener(v -> {
+            startActivity(new Intent(this, ShareJourneyActivity.class));
+        });
     }
 }

@@ -8,4 +8,5 @@
     <color name="secondary_text">#555555</color>
     <color name="divider">#F5F5F5</color>
     <color name="card_bg">#FFFFFF</color>
+    <color name="purple_500">#9C27B0</color>
 </resources>

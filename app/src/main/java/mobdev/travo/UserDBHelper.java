@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "TravoDB.db";
@@ -235,22 +238,89 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public void insertSampleDestinations() {
         insertDestination("Temple of Leah", "Roman-inspired, 'Taj Mahal of Cebu'",
-                "Cebu Transcentral Hwy, Cebu City", "Landmark", "temple_of_leah.jpg");
+                "Cebu Transcentral Hwy, Cebu City", "Landmark", "temple_of_leah");
         insertDestination("Sirao Flower Garden", "'Little Amsterdam' IG-worthy snap spot",
-                "Brgy. Sirao, Cebu City", "Nature Park", "sirao_garden.jpg");
+                "Brgy. Sirao, Cebu City", "Nature Park", "sirao_garden");
         insertDestination("Magellan's Cross", "Famous cross planted by Magellan in 1521",
-                "Magallanes St, Cebu City", "Historical", "magellans_cross.jpg");
+                "Magallanes St, Cebu City", "Historical", "magellans_cross");
         insertDestination("IT Park", "Live, work, play district",
-                "Lahug, Cebu City", "Lifestyle", "itpark.jpg");
+                "Lahug, Cebu City", "Lifestyle", "itpark");
         insertDestination("Colon Street", "Oldest street in the Philippines",
-                "Downtown Cebu City", "Historical", "colon.jpg");
+                "Downtown Cebu City", "Historical", "colon");
         insertDestination("Tops Lookout", "Mountain viewpoint over Cebu City",
-                "Busay, Cebu City", "Viewpoint", "tops.jpg");
+                "Busay, Cebu City", "Viewpoint", "tops");
         insertDestination("Basilica del Sto. Niño", "16th-century Catholic church",
-                "Osmeña Blvd, Cebu City", "Church", "sto_nino.jpg");
+                "Osmeña Blvd, Cebu City", "Church", "sto_nino");
         insertDestination("Cebu Ocean Park", "Largest oceanarium in the VisMin region",
-                "SRP, Cebu City", "Attraction", "ocean_park.jpg");
+                "SRP, Cebu City", "Attraction", "ocean_park");
     }
 
 
-}
+    // Return cursor for a user, searching by their primary key (_id)
+    public Cursor getUserByID(long id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_NAME,
+                null, // all columns
+                COL_ID + " = ?",
+                new String[]{String.valueOf(id)},
+                null, null, null);
+    }
+
+    // Get a user's data by their email address
+    public Cursor getUserByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_NAME,
+                null, // all columns
+                COL_EMAIL + " = ?",
+                new String[]{email},
+                null, null, null);
+    }
+
+    public void clearDestinations() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("destinations", null, null); // deletes all rows
+        db.close();
+    }
+
+    public List getAllDestinationsAsList(Context context) {
+        List destinationList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                TABLE_DESTINATIONS,
+                null,
+                null,
+                null,
+                null,
+                null,
+                DEST_COL_NAME + " ASC"
+        );
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(DEST_COL_NAME));
+                String location = cursor.getString(cursor.getColumnIndexOrThrow(DEST_COL_LOCATION));
+                String imgName = cursor.getString(cursor.getColumnIndexOrThrow(DEST_COL_GALLERY));
+                // Use the resource identifier to get the drawable
+                int imgResId = context.getResources().getIdentifier(
+                        imgName,
+                        "drawable",
+                        context.getPackageName()
+                );
+                // Fallback if resource not found
+                if (imgResId == 0) {
+                    imgResId = R.drawable.ic_placeholder;
+                }
+                destinationList.add(new DestinationModel(name, location, imgResId));
+            } while (cursor.moveToNext());
+
+            cursor.close();
+        }
+
+        return destinationList;
+    }
+
+
+
+
+
+    }
