@@ -1,6 +1,7 @@
 package mobdev.travo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,22 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         holder.ratingBar.setRating(item.getRating());
         holder.routeText.setText(item.getRoute());
         holder.fareText.setText(item.getFare());
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), JourneyDetailsActivity.class);
+
+            // (Optional) pass data to the details screen:
+            intent.putExtra("startLoc", item.getStartLocation());
+            intent.putExtra("endLoc",   item.getEndLocation());
+            intent.putExtra("mode",     item.getTransportMode());
+            intent.putExtra("time",     item.getTravelTime());
+            intent.putExtra("cost", item.getFare());
+            intent.putExtra("tips",     item.getTravelTips());
+            intent.putExtra("rating",   item.getRating());
+            // you could also pass image IDs if you show route snapshots…
+
+            v.getContext().startActivity(intent);
+        });
     }
 
     @Override

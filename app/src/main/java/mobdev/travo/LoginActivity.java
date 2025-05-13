@@ -130,6 +130,11 @@ public class LoginActivity extends AppCompatActivity {
             // Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
             // startActivity(intent);
             // finish();
+
+            // Temporary Navigation to home page:
+            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+            startActivity(intent);
+            finish();
         } else {
             Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
         }

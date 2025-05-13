@@ -25,6 +25,13 @@
             android:exported="false">
         </activity>
 
+        <activity android:name=".HomePageActivity" />
+        <activity android:name=".CommunityPageActivity" />
+        <activity android:name=".JourneyDetailsActivity" />
+        <activity android:name=".ShareJourneyActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".SettingsActivity" />
+
 
         <activity
             android:name=".MainActivity"
