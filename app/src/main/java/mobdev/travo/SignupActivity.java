@@ -43,6 +43,9 @@ public class SignupActivity extends AppCompatActivity {
 
         // --- Initializing DB Helper
         dbHelper = new UserDBHelper(this);
+        if (dbHelper.getAllDestinations().getCount() == 0) {
+            dbHelper.insertSampleDestinations();
+        }
 
         // --- Initializing UI elements uusing IDs ---
         initViews();

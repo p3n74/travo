@@ -233,5 +233,24 @@ public class UserDBHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(userId)}, null, null, ROUTE_COL_DATE + " DESC");
     }
 
+    public void insertSampleDestinations() {
+        insertDestination("Temple of Leah", "Roman-inspired, 'Taj Mahal of Cebu'",
+                "Cebu Transcentral Hwy, Cebu City", "Landmark", "temple_of_leah.jpg");
+        insertDestination("Sirao Flower Garden", "'Little Amsterdam' IG-worthy snap spot",
+                "Brgy. Sirao, Cebu City", "Nature Park", "sirao_garden.jpg");
+        insertDestination("Magellan's Cross", "Famous cross planted by Magellan in 1521",
+                "Magallanes St, Cebu City", "Historical", "magellans_cross.jpg");
+        insertDestination("IT Park", "Live, work, play district",
+                "Lahug, Cebu City", "Lifestyle", "itpark.jpg");
+        insertDestination("Colon Street", "Oldest street in the Philippines",
+                "Downtown Cebu City", "Historical", "colon.jpg");
+        insertDestination("Tops Lookout", "Mountain viewpoint over Cebu City",
+                "Busay, Cebu City", "Viewpoint", "tops.jpg");
+        insertDestination("Basilica del Sto. Niño", "16th-century Catholic church",
+                "Osmeña Blvd, Cebu City", "Church", "sto_nino.jpg");
+        insertDestination("Cebu Ocean Park", "Largest oceanarium in the VisMin region",
+                "SRP, Cebu City", "Attraction", "ocean_park.jpg");
+    }
+
 
 }

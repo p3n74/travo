@@ -46,7 +46,7 @@ public class HomePageActivity extends NavigationBarActivity {
 
         discoverList.add(new DestinationModel("Elevator ni King Al", "2010 Gov. M. Cuenco Ave, Cebu City", R.drawable.elevator));
         discoverList.add(new DestinationModel("Tales and Feelings", "2nd flr, above N. Ramos St, Cebu City", R.drawable.tales_feelings));
-
+a
         // Set adapters
         popularAdapter = new DestinationAdapter(this, popularList);
         discoverAdapter = new DestinationAdapter(this, discoverList);
