@@ -126,10 +126,18 @@ public class LoginActivity extends AppCompatActivity {
 
         if (dbHelper.checkUser(email, password)) {
             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
-            // TODO: Navigate to dashboard/home
-            // Intent intent = new Intent(LoginActivity.this, DashboardActivity.class);
-            // startActivity(intent);
-            // finish();
+
+            // *** Save login status and user info in SharedPreferences for app-wide use ***
+            getSharedPreferences("user_session", MODE_PRIVATE)
+                    .edit()
+                    .putString("email", email)
+                    .apply();
+
+            // Now navigate to your Home/Main activity (change to your own, here I use HomePageActivity)
+            Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // clear backstack
+            startActivity(intent);
+            finish();
         } else {
             Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
         }

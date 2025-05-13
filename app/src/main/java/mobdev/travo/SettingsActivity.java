@@ -1,4 +1,4 @@
-package com.example.finalproject;
+package mobdev.travo;
 
 import android.os.Bundle;
 import android.view.View;

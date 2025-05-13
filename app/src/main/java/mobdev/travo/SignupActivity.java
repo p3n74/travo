@@ -1,4 +1,4 @@
-package mobdev.travo; // Your package name - make sure this is correct
+package mobdev.travo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent; // Import Intent for navigation
@@ -188,14 +188,12 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }
 
-        // Additional user details you might want to save
         String name = etName.getText().toString().trim();
         String countryCode = spinnerCountry.getSelectedItem().toString();
         String phone = etPhone.getText().toString().trim();
         String gender = dropdownGender.getText().toString();
 
-        // For now, just inserting basic user info
-        long result = dbHelper.insertUser(email, password);
+        long result = dbHelper.insertUser(name, email, password, countryCode, phone, gender);
 
         if (result != -1) {
             Toast.makeText(this, "Signup successful!", Toast.LENGTH_SHORT).show();
