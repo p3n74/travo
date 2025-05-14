@@ -327,5 +327,16 @@ public class UserDBHelper extends SQLiteOpenHelper {
     }
 
 
+    public boolean updateUserProfile(String oldEmail, String newName, String newPhone, String newEmail) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_NAME, newName);
+        values.put(COL_PHONE, newPhone);
+        values.put(COL_EMAIL, newEmail);
 
+        // Update the user's data in the database where the email matches
+        int rowsAffected = db.update(TABLE_NAME, values, COL_EMAIL + " = ?", new String[]{oldEmail});
+        return rowsAffected > 0;  // Return true if the profile was successfully updated
     }
+
+}

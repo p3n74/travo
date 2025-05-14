@@ -49,7 +49,15 @@ public class SettingsActivity extends NavigationBarActivity {
                 Toast.makeText(this, "Notifications Enabled!", Toast.LENGTH_SHORT).show());
 
         logout.setOnClickListener(v -> {
+            // Clear SharedPreferences
+            getSharedPreferences("user_session", MODE_PRIVATE)
+                    .edit()
+                    .clear()
+                    .apply();
+
+            // Go back to LoginActivity
             Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clears back stack
             startActivity(intent);
             finish();
         });

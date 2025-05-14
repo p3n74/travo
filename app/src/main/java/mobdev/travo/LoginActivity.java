@@ -3,6 +3,7 @@ package mobdev.travo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -128,10 +129,11 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
 
             // *** Save login status and user info in SharedPreferences for app-wide use ***
-            getSharedPreferences("user_session", MODE_PRIVATE)
-                    .edit()
-                    .putString("email", email)
-                    .apply();
+            SharedPreferences prefs = getSharedPreferences("user_session", MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("email", email);
+            editor.apply();
+
 
             // Now navigate to your Home/Main activity (change to your own, here I use HomePageActivity)
             Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
