@@ -54,11 +54,12 @@
                         android:tint="@color/secondary_text"
                         android:layout_marginStart="18dp"/>
 
-                    <TextView
+                    <EditText
                         android:id="@+id/tvSearchPrompt"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Where do you want to go?"
+                        android:background="@android:color/transparent"
+                        android:hint="Where do you want to go?"
                         android:textColor="#888"
                         android:layout_marginStart="16dp"
                         android:layout_weight="1"

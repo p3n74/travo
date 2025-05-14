@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -101,6 +103,24 @@ public class CommunityPageActivity extends NavigationBarActivity {
                 searchBar.setVisibility(View.GONE);
             }
         });
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s); // Filter the adapter
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Optional
+            }
+        });
+
     }
 
     private void loadImageFromAssets(String filename, ImageView imageView) {

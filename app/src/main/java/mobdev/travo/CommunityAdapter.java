@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -11,16 +13,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ViewHolder> {
+public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.ViewHolder> implements Filterable {
 
     private Context context;
     private List<CommunityItem> communityItems;
 
+    private List<CommunityItem> communityItemsFull; // full copy for filtering
+
+
     public CommunityAdapter(Context context, List<CommunityItem> communityItems) {
         this.context = context;
         this.communityItems = communityItems;
+        this.communityItemsFull = new ArrayList<>(communityItems);
     }
 
     @NonNull
@@ -68,6 +75,40 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     public int getItemCount() {
         return communityItems.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<CommunityItem> filteredList = new ArrayList<>();
+
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(communityItemsFull);
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+
+                    for (CommunityItem item : communityItemsFull) {
+                        if (item.getStartLocation().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(item);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                communityItems.clear();
+                communityItems.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvUserName, tvRouteSummary, tvStartLocation, tvEndLocation,

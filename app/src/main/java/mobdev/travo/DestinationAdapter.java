@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.util.Log;
@@ -15,17 +17,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
-public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.ViewHolder> {
+public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.ViewHolder> implements Filterable {
 
     private Context context;
     private List<DestinationModel> destinations;
+
+    private List<DestinationModel> destinationFullList;
     private static final String TAG = "DestinationAdapter";
 
     public DestinationAdapter(Context context, List<DestinationModel> destinations) {
         this.context = context;
         this.destinations = destinations;
+        this.destinationFullList = new ArrayList<>(destinations);
     }
 
     @NonNull
@@ -95,6 +101,38 @@ public class DestinationAdapter extends RecyclerView.Adapter<DestinationAdapter.
     public int getItemCount() {
         return destinations.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<DestinationModel> filteredList = new ArrayList<>();
+                if (constraint == null || constraint.length() == 0) {
+                    filteredList.addAll(destinationFullList); // show all if empty
+                } else {
+                    String filterPattern = constraint.toString().toLowerCase().trim();
+                    for (DestinationModel destination : destinationFullList) {
+                        if (destination.getTitle().toLowerCase().contains(filterPattern)) {
+                            filteredList.add(destination);
+                        }
+                    }
+                }
+
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                destinations.clear();
+                destinations.addAll((List) results.values);
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;

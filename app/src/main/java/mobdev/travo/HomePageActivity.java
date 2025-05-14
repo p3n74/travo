@@ -3,7 +3,10 @@ package mobdev.travo;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -62,10 +65,17 @@ public class HomePageActivity extends NavigationBarActivity {
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvDestinations.setAdapter(destinationAdapter);
 
-// Search bar tap
-        findViewById(R.id.tvSearchPrompt).setOnClickListener(v -> {
-            // startActivity(new Intent(this, SearchActivity.class));
+        EditText searchInput = findViewById(R.id.tvSearchPrompt);
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                destinationAdapter.getFilter().filter(s);
+            }
+
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void afterTextChanged(Editable s) {}
         });
+
 
 // FAB for sharing journeys
         findViewById(R.id.fabShareJourney).setOnClickListener(v -> {

@@ -113,6 +113,7 @@
                     android:layout_height="24dp"
                     app:tint="#5748E6"/>
                 <TextView
+                    android:id="@+id/profile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Profile"
@@ -133,6 +134,7 @@
                     android:src="@drawable/ic_notifications"
                     app:tint="#5748E6"/>
                 <TextView
+                    android:id="@+id/notif"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Notifications"
@@ -153,6 +155,7 @@
                     android:src="@drawable/ic_logout"
                     app:tint="#5748E6"/>
                 <TextView
+                    android:id="@+id/log_out"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Log Out"
